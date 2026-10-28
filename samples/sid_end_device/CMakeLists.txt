@@ -49,6 +49,7 @@ if(CONFIG_SID_END_DEVICE_CLI)
         src/cli/app_dut.c
         src/cli/app_shell.c
         src/cli/ep_cfg_print.c
+        src/cli/mac_shell.c
         src/cli/print_shell.c
         src/cli/metrics_shell.c
     )

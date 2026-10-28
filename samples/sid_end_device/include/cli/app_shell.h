@@ -7,6 +7,7 @@
 #ifndef SID_DUT_SHELL_H
 #define SID_DUT_SHELL_H
 
+#include <stdbool.h>
 #include <stdint.h>
 #include <zephyr/shell/shell.h>
 #include <sid_api.h>
@@ -289,6 +290,16 @@ int cmd_sid_stop(const struct shell *shell, int32_t argc, const char **argv);
 int cmd_sid_send(const struct shell *shell, int32_t argc, const char **argv);
 int cmd_sid_factory_reset(const struct shell *shell, int32_t argc, const char **argv);
 int cmd_sid_get_mtu(const struct shell *shell, int32_t argc, const char **argv);
+
+/**
+ * @brief Deinitialize and initialize the Sidewalk stack with a new link mask.
+ *
+ * Also makes the link mask the default for subsequent sid start/stop/send commands.
+ */
+int cli_sid_reinit(const struct shell *shell, uint32_t link_mask);
+
+/** @brief Get the link mask currently used by the CLI for sid start/stop/send commands. */
+uint32_t cli_sid_get_link_type(void);
 
 int cmd_sid_option_battery(const struct shell *shell, int32_t argc, const char **argv);
 int cmd_sid_option_lp_set(const struct shell *shell, int32_t argc, const char **argv);

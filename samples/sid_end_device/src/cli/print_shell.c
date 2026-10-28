@@ -15,7 +15,6 @@
 #include <sid_sdk_version.h>
 #include <sid_pal_mfg_store_ifc.h>
 #include <sid_pal_storage_kv_ifc.h>
-#include <sid_pal_storage_kv_internal_group_ids.h>
 #include <sid_clock_ifc.h>
 
 #include <cli/print_shell.h>
@@ -27,6 +26,8 @@
 	if ((argc < required) || (argc > (required + optional))) {                                 \
 		return -EINVAL;                                                                    \
 	}
+
+#define STORAGE_KV_PROTOCOL_GROUP 0
 
 enum storage_kv_protocol_keys {
 	STORAGE_KV_SIDEWALK_ID = 43,
@@ -132,7 +133,7 @@ int cmd_print_txid(const struct shell *shell, int32_t argc, const char **argv)
 	sid_error_t ret;
 
 	if (!sid_pal_mfg_store_dev_id_get(dev_id)) {
-		ret = sid_pal_storage_kv_record_get(SID_PAL_STORAGE_KV_INTERNAL_PROTOCOL_GROUP_ID,
+		ret = sid_pal_storage_kv_record_get(STORAGE_KV_PROTOCOL_GROUP,
 						      STORAGE_KV_SIDEWALK_ID, dev_id, sizeof(dev_id));
 		if (ret != SID_ERROR_NONE) {
 			goto error;

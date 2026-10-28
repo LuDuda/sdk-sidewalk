@@ -433,6 +433,25 @@ int cmd_sid_stop(const struct shell *shell, int32_t argc, const char **argv)
 	return cmd_sid_simple_param(dut_event_stop, &link_type);
 }
 
+int cli_sid_reinit(const struct shell *shell, uint32_t link_mask)
+{
+	cli_cfg.shell = shell;
+	cli_cfg.send_link_type = link_mask;
+
+	int err = sidewalk_event_send(dut_event_deinit, NULL, NULL);
+
+	if (err) {
+		return -ENOMSG;
+	}
+
+	return cmd_sid_simple_param(dut_event_init, &link_mask);
+}
+
+uint32_t cli_sid_get_link_type(void)
+{
+	return cli_cfg.send_link_type;
+}
+
 static void free_sid_send_event_ctx(void *ctx)
 {
 	sidewalk_msg_t *send = (sidewalk_msg_t *)ctx;
